@@ -125,12 +125,19 @@ def main():
 
     initialize()
 
+    # Set the background color of the window
+    glClearColor(0.05, 0.05, 0.05, 1.0)
+
     # Loop until the user closes the window
     t0 = glfw.get_time()
-    while not glfw.window_should_close(win):
+    while not glfw.window_should_close(win):       
         t = glfw.get_time()
         update(t-t0)
         t0 = t
+
+        # Clear the color buffer before rendering
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
         display()
 
         # Swap front and back buffers
