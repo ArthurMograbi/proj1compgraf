@@ -50,6 +50,7 @@ class Shader:
       raise SystemError("Type not supported in Shader.SetUniform: " + tp)
     
   def ActiveTexture (self, varname):
+
     self.SetUniform(varname,self.texunit)
     glActiveTexture(GL_TEXTURE0+self.texunit)
     self.texunit += 1

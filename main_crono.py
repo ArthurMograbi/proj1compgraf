@@ -11,6 +11,7 @@ from node import *
 from shader import *
 from scene import *
 from engine import *
+from texture_manager import Texture
 
 class AnimRot(Engine):
   def __init__ (self, trf,rate=6):
@@ -34,7 +35,10 @@ def initialize ():
 
   trSun = Transform()
   trSun.Scale(.75,.75,1)
-  
+
+  tex1 = Texture("face", "images/stripes.png")
+  tex2 = Texture("face", "images/red.png")
+
   sun = Node(trf=trSun,apps=[Color(0.8,.5,0)],shps=[Disk(32)])
 
   trEarEx = Transform()
@@ -50,19 +54,19 @@ def initialize ():
 
   earth = Node(trf=trEarEx,nodes=[
             Node(trf=trEarMid,nodes=[
-              Node(trf=trEarIn,apps=[Color(0,0,1)],shps=[Disk(32)],),
+              Node(trf=trEarIn,apps=[tex1],shps=[Disk(32)],),
               Node(trf=trMunEx,nodes=[Node(trf=trMunIn,apps=[Color(.8,.8,.8)],shps=[Disk(32)])])
             ])
           ])
 
-  trMarsEx = Transform()
-  trMarsIn = Transform()
-  trMarsIn.Translate(1.5,1.5,0)
-  trMarsIn.Scale(.20,.20,1)
+  trMercuryEx = Transform()
+  trMercuryIn = Transform()
+  trMercuryIn.Translate(1.5,1.5,0)
+  trMercuryIn.Scale(.20,.20,1)
 
-  mars = Node(trf=trMarsEx,nodes=[Node(trf=trMarsIn,apps=[Color(1,.1,.1)],shps=[Disk(32)])])
+  mercury = Node(trf=trMercuryEx,nodes=[Node(trMercuryIn,apps=[tex2],shps=[Disk(32)])])
 
-  base = Node(trf=trBase,nodes=[sun,earth,mars])
+  base = Node(trf=trBase,nodes=[sun,earth,mercury])
 
   #trf4 = Transform()
   #trf4.Translate(1,1,0)
@@ -85,8 +89,8 @@ def initialize ():
   scene.AddEngine(AnimRot(trEarEx,10))
   scene.AddEngine(AnimRot(trEarIn,-15))
 
-  scene.AddEngine(AnimRot(trMarsEx,13.5))
-  scene.AddEngine(AnimRot(trMarsIn,12))
+  scene.AddEngine(AnimRot(trMercuryEx,13.5))
+  scene.AddEngine(AnimRot(trMercuryIn,12))
 
   scene.AddEngine(AnimRot(trMunEx,30))
   scene.AddEngine(AnimRot(trMunIn,-30.4))
