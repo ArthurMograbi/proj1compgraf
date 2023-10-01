@@ -1,12 +1,14 @@
 #version 410
 
-
 uniform vec4 color;
+uniform sampler2D face;
 
+in data {
+    vec2 texcoord;
+}   f;
+out vec4 outcolor;
 
-out vec4 FragColor;
-
-void main(void)
+void main (void)
 {
-    FragColor = color;
+    outcolor = color * texture(face, f.texcoord);
 }
