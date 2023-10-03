@@ -10,5 +10,5 @@ out vec4 outcolor;
 
 void main (void)
 {
-    outcolor = color * texture(face, f.texcoord);
+    outcolor = texture(face, f.texcoord);
 }
