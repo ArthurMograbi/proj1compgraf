@@ -12,6 +12,7 @@ from shader import *
 from scene import *
 from engine import *
 from texture_manager import Texture
+from square import Square
 
 class AnimRot(Engine):
   def __init__ (self, trf,rate=6):
@@ -36,16 +37,19 @@ def initialize ():
   trSun = Transform()
   trSun.Scale(.75,.75,1)
 
-  tex1 = Texture("face", "images/stripes.png")
-  tex2 = Texture("face", "images/red.png")
+  texEar = Texture("face", "images/earth.jpg")
+  texMer = Texture("face", "images/mercury.png")
+  texSun = Texture("face", "images/sun.png")
+  texMoon = Texture("face", "images/moon.jpeg")
+  texSpc = Texture("face", "images/space.jpg")
 
-  sun = Node(trf=trSun,apps=[Color(0.8,.5,0)],shps=[Disk(32)])
+  sun = Node(trf=trSun,apps=[texSun],shps=[Disk(32)])
 
   trEarEx = Transform()
   trEarMid = Transform()
   trEarIn = Transform()
   trEarMid.Translate(2.5,2.5,0)
-  trEarIn.Scale(.25,.25,1)
+  trEarIn.Scale(0.25, 0.25, 1)
 
   trMunEx = Transform()
   trMunIn = Transform()
@@ -54,8 +58,8 @@ def initialize ():
 
   earth = Node(trf=trEarEx,nodes=[
             Node(trf=trEarMid,nodes=[
-              Node(trf=trEarIn,apps=[tex1],shps=[Disk(32)],),
-              Node(trf=trMunEx,nodes=[Node(trf=trMunIn,apps=[Color(.8,.8,.8)],shps=[Disk(32)])])
+              Node(trf=trEarIn,apps=[texEar],shps=[Disk(32)],),
+              Node(trf=trMunEx,nodes=[Node(trf=trMunIn,apps=[texMoon],shps=[Disk(32)])])
             ])
           ])
 
@@ -64,13 +68,12 @@ def initialize ():
   trMercuryIn.Translate(1.5,1.5,0)
   trMercuryIn.Scale(.20,.20,1)
 
-  mercury = Node(trf=trMercuryEx,nodes=[Node(trMercuryIn,apps=[tex2],shps=[Disk(32)])])
+  mercury = Node(trf=trMercuryEx,nodes=[Node(trMercuryIn,apps=[texMer],shps=[Disk(32)])])
 
-  base = Node(trf=trBase,nodes=[sun,earth,mercury])
-
-  #trf4 = Transform()
-  #trf4.Translate(1,1,0)
-  #trf4.
+  background_transform = Transform()
+  background_transform.Scale(5, 5, 1)
+  bg_node = Node(trf=background_transform, apps=[texSpc], shps=[Square()])
+  base = Node(trf=trBase,nodes=[sun,earth,mercury, bg_node])
 
 
 
