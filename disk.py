@@ -21,7 +21,7 @@ class Disk(Shape):
         glEnableVertexAttribArray(0)
         
         # Texture coordinates
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4*4, None) # offset by 2 floats (8 bytes)
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4*4, ctypes.c_void_p(2*4)) # offset by 2 floats (8 bytes)
         glEnableVertexAttribArray(1)
 
     def generate_vertices(self):
@@ -33,7 +33,7 @@ class Disk(Shape):
         vertices.extend([0.0, 0.0])
         tex_coords.extend([0.5, 0.5])
 
-        for i in range(self.num_segments):
+        for i in range(self.num_segments + 1):
             x = math.cos(i * angle) * self.radius
             y = math.sin(i * angle) * self.radius
             vertices.extend([x, y])
@@ -54,6 +54,6 @@ class Disk(Shape):
         glBindBuffer(GL_ARRAY_BUFFER, self.coord_buffer)
         glEnableVertexAttribArray(0)
         glEnableVertexAttribArray(1)
-        glDrawArrays(GL_TRIANGLE_FAN, 0, self.num_segments)
+        glDrawArrays(GL_TRIANGLE_FAN, 0, self.num_segments + 2)
         glDisableVertexAttribArray(0)
         glDisableVertexAttribArray(1)
